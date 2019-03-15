@@ -18,33 +18,18 @@ def create_parser():
     parser.add_argument("text", help='text to search for')
     return parser
 
-
-# def search_zip(zipname, text_to_search):
-#     """Opens a single zip file and searches for text"""
-#     with zipfile.ZipFile(zipname, 'r') as myzip:
-#         toc = myzip.namelist()
-#         # get the table of contents
-#         if 'word/document.xml' in toc:
-#             with myzip.open('word/document.xml') as document:
-#                 for line in document:
-#                     idx = line.find(text_to_search)
-#                     if idx >= 0:
-#                         print(line[idx - 40: idx + 40])
-#                         # I found a match!
-#                         return True
-#     # Nothing was found here.
-#     return False
-
-
 def main(directory_to_search, text_to_search):
     print ('Searching directory {} for text "{}" ...'.format(directory_to_search, text_to_search))
     
+# KK comment: 'Files searched count should be incremented only if the file extension is .dotm'
+
     # get a list of files to open
     file_list = os.listdir(directory_to_search)
     match_counter = 0
     search_counter = 0
     for file in file_list:
-        search_counter += 1
+        if file.endswith('.dotm'):
+            search_counter += 1
         if not file.endswith('.dotm'):
             print("Ignoring file: {}".format(file))
             continue
